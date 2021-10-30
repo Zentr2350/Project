@@ -29,7 +29,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="tab" native="true">
+    <widget class="QWidget" name="tab">
      <property name="toolTip">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;уку&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
@@ -140,13 +140,82 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <string>Построить график</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>580</y>
+        <width>371</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Здесь вы можете маштабировать картинку</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>750</y>
+        <width>171</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Маштабировать</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>650</y>
+        <width>351</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>Увеличить</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Уменьшить</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>в</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>раз(-a)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab2" native="true">
+    <widget class="QWidget" name="tab2">
      <attribute name="title">
       <string/>
      </attribute>
     </widget>
-    <widget class="QWidget" name="tab3" native="true">
+    <widget class="QWidget" name="tab3">
      <attribute name="title">
       <string/>
      </attribute>
