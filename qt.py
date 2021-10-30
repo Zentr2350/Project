@@ -52,6 +52,9 @@ class MyWidget(QMainWindow):
         self.image.setPixmap(self.pixmap)
         self.pushButton_2.clicked.connect(self.x)
         self.k = 1
+        self.label_12.hide()
+        self.label_13.hide()
+        self.label_11.hide()
 
 
     def x(self):
@@ -60,6 +63,8 @@ class MyWidget(QMainWindow):
         else:
             self.k /= int(self.lineEdit_2.text())
         gr(self.lineEdit.text(), self.k)
+        self.label_12.setText(str(1 / self.k))
+        self.label_13.setText(str(1 / self.k))
 
         self.pixmap = QPixmap('gr.jpg')
         self.image = self.label
@@ -74,6 +79,9 @@ class MyWidget(QMainWindow):
         self.pixmap = QPixmap('gr.jpg')
         self.image = self.label
         self.image.setPixmap(self.pixmap)
+        self.label_11.show()
+        self.label_12.show()
+        self.label_13.show()
 
 
 if __name__ == '__main__':
