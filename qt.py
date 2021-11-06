@@ -3,7 +3,7 @@ from math import *
 from PIL import Image, ImageDraw
 
 from PyQt5 import uic  # Импортируем uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QSpinBox
 from PyQt5.QtGui import QPixmap
 import sqlite3
 
@@ -51,9 +51,10 @@ def gr(a, o):
             except Exception as e:
                 pass
         if o == 1:
-            cur.execute(f"""insert into fpqt(function, points) values('{k}', '{s}')""")
-            con.commit()
-            con.close()
+            if cur.execute(f"select function from fpqt where function = '{k}'").fetchall() == []:
+                cur.execute(f"""insert into fpqt(function, points) values('{k}', '{s}')""")
+                con.commit()
+                con.close()
         im.save('gr.jpg')
     else:
         for irt in range(int(-10000), int(10000)):
@@ -72,11 +73,9 @@ def gr(a, o):
                     irt * 50 * o + 500, (0 - eval(a)) * o * 50 + 500, irt * o * 50 + 500, (0 - eval(a)) * o * 50 + 500),
                     fill=(0, 0, 0),
                     width=2)
-                s.append(irt)
-                s.append(eval(a))
                 a = a.replace('irt', 'cht')
-                # if abs(((0 - eval(a.replace('cht', 'gt'))) * 50 * o + 500) - ((0 - eval(a.replace('cht', 'cy'))) * o * 50 + 500)) < 100:
-                draw.line(
+                if abs(((0 - eval(a.replace('cht', 'gt'))) * 50 * o + 500) - ((0 - eval(a.replace('cht', 'cy'))) * o * 50 + 500)) < 100:
+                    draw.line(
                         (irt * 50 * o + 500, (0 - eval(a.replace('cht', 'irt'))) * o * 50 + 500, cht * o * 50 + 500,
                          (0 - eval(a)) * 50 * o + 500),
                         fill=(0, 0, 0),
@@ -161,6 +160,8 @@ class DataBase(QDialog):
         self.b = 50
         self.pushButton_4.clicked.connect(self.right)
         self.pushButton_3.clicked.connect(self.left)
+        self.m = self.n = self.v = False
+        self.label_7.hide()
 
     def ok(self):
         cur = self.con.cursor()
@@ -172,37 +173,94 @@ class DataBase(QDialog):
             a = ''
             self.r = cur.execute(f"SELECT points FROM fpqt WHERE function = '{self.lineEdit.text()}'").fetchall()
             self.r = self.r[0][0][1:-1].split(', ')
+            self.c = 1
             for i in range(1, self.b, 2):
-                a += f'{i}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                self.c += 1
             self.label_8.setText(a)
             self.label_6.hide()
             self.pushButton_2.hide()
             self.spinBox.hide()
             self.a = True
+            self.label_7.show()
+            self.pushButton_3.show()
+            self.pushButton_4.show()
 
     def ok1(self):
+        a = ''
+        cur = self.con.cursor()
+        self.b = 50
+        self.c = 1
+        d = []
+        self.r = cur.execute(f"SELECT points FROM fpqt WHERE function = '{self.lineEdit.text()}'").fetchall()
+        self.r = self.r[0][0][1:-1].split(', ')
         if self.comboBox.currentText() == 'Точки у которых у Х n знаков после запятой':
-            self.label_8.setText('Точки у которых у Х n знаков после запятой')
+            for i in range(1, len(self.r), 2):
+                if float(self.r[i - 1]) == float(f'{float(self.r[i - 1]):.{self.spinBox.text()}f}'):
+                    d.append(self.r[i - 1])
+                    d.append(self.r[i])
+            self.r = d
+            try:
+                for i in range(1, self.b, 2):
+                    a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                    self.c += 1
+            except Exception:
+                pass
         elif self.comboBox.currentText() == 'Точки у кторых у Y n знаков после запятой':
-            self.label_8.setText('Точки у кторых у Y n знаков после запятой')
+            for i in range(1, len(self.r), 2):
+                if float(self.r[i]) == float(f'{float(self.r[i]):.{self.spinBox.text()}f}'):
+                    d.append(self.r[i - 1])
+                    d.append(self.r[i])
+            self.r = d
+            try:
+                for i in range(1, self.b, 2):
+                    a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                    self.c += 1
+            except Exception:
+                pass
         else:
-            self.label_8.setText('qq')
+            for i in range(1, len(self.r), 2):
+                if float(self.r[i - 1]) == float(f'{float(self.r[i - 1]):.{self.spinBox.text()}f}') and float(self.r[i]) == float(f'{float(self.r[i]):.{self.spinBox.text()}f}'):
+                    d.append(self.r[i - 1])
+                    d.append(self.r[i])
+            self.r = d
+            try:
+                for i in range(1, self.b, 2):
+                    a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                    self.c += 1
+            except Exception:
+                pass
+        if self.c <= 25:
+            self.pushButton_3.hide()
+            self.pushButton_4.hide()
+        else:
+            self.pushButton_3.show()
+            self.pushButton_4.show()
+        self.label_8.setText(a)
+        self.label_7.show()
+
 
     def right(self):
-        self.b += 50
-        a = ''
-        for i in range(self.b - 49, self.b, 2):
-            a += f'{i}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
-        self.label_8.setText(a)
+        if self.b > len(self.r) - 50:
+            pass
+        else:
+            self.b += 50
+            a = ''
+            for i in range(self.b - 49, self.b, 2):
+                a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                self.c += 1
+            self.label_8.setText(a)
 
     def left(self):
         if self.b == 50:
             pass
         else:
             self.b -= 50
+            self.c -= 50
             a = ''
             for i in range(self.b - 49, self.b, 2):
-                a += f'{i}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                a += f'{self.c}) x = {self.r[i - 1]}\ty = {self.r[i]}\n'
+                self.c += 1
             self.label_8.setText(a)
 
 
