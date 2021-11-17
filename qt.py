@@ -72,9 +72,10 @@ def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # фун
         im.save(name)
     else:
         for irt in range(int(-10000), int(10000)):
-            a = a.replace('x', 'irt')
-
             try:
+                a = a.replace('x', 'irt')
+
+
                 a = a.replace('cht', 'irt')
 
                 irt /= 1000 * o
@@ -105,260 +106,269 @@ def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # фун
         im.save(name)
 
 def func(u):  # функция определяющая квадратичную функцию по графику параболы
-    img = Image.open(u)
-    x, y = img.size
+    try:
+        img = Image.open(u)
+        x, y = img.size
 
-    colorPixel = []
-    for i in range(img.size[0]):
-        for g in range(img.size[1]):
-            pixel = img.getpixel((g, i))
-            colorPixel.append(pixel)
-    v = 0
-    w = False
-    e = False
-    d = 0
-    for i in colorPixel[:img.size[0]]:
-        if i != (255, 255, 255):
-            e = True
-            for g in colorPixel[v:x * y:x]:
-                if g == (255, 255, 255):
-                    w = True
-                    break
-        if w:
-            w = False
-            e = False
-        elif e:
-            w = e = False
-            break
-        v += 1
-
-    for i in colorPixel[0:x * y:x]:
-        if i != (255, 255, 255):
-            e = True
-            for g in colorPixel[d:d + x]:
-                if g == (255, 255, 255):
-                    w = True
-                    break
-        if w:
-            w = False
-            e = False
-        elif e:
-            d /= y
-            w = e = False
-            break
-        d += x
-    d += 1
-    v += 1
-    j = 0
-    for i in colorPixel[int(d * x - x * 3):int(d * x - 2 * x)]:
-        if sum(i) < 750 and j > 5:
-            if sum(colorPixel[int(d * x - 3 * x) + j * 2]) < 750:
-                j += 1
-                break
-        j += 1
-    g = 0
-    k = []
-    w = False
-    e = True
-    r = False
-    m = n = 0
-    q = False
-    for i in range(1, x + 1):
-        for t in colorPixel[i * x - x:i * x]:
-            if sum(t) < 650 and (g < d - 8 or g > d + 8) and not w:
-                w = True
-                e = False
-                q = True
-                for z in range(g - 5, g + 5):
-                    if z in k or z - (z - 500) * 2 in k:
-                        r = True
-                if not r and len(k) != 4 and (i < 495 or i > 507):
-                    k.append(g)
-                    k.append(-i + 501)
-                r = False
-            if sum(t) < 650 and (g < d - 8 or g > d + 8) and w and not q:
-                w = False
+        colorPixel = []
+        for i in range(img.size[0]):
+            for g in range(img.size[1]):
+                pixel = img.getpixel((g, i))
+                colorPixel.append(pixel)
+        v = 0
+        w = False
+        e = False
+        d = 0
+        for i in colorPixel[:img.size[0]]:
+            if i != (255, 255, 255):
                 e = True
-                for z in range(g - 5, g + 5):
-                    if z in k or z - (z - 500) * 2 in k:
-                        r = True
-                if not r and len(k) != 4 and (i < 495 or i > 507):
-                    k.append(g)
-                    k.append(-i + 501)
-                r = False
-            g += 1
-            q = False
-        g = 0
-        if not e or len(k) == 4:
-            break
+                for g in colorPixel[v:x * y:x]:
+                    if g == (255, 255, 255):
+                        w = True
+                        break
+            if w:
+                w = False
+                e = False
+            elif e:
+                w = e = False
+                break
+            v += 1
 
-    if not e or len(k) == 4:
+        for i in colorPixel[0:x * y:x]:
+            if i != (255, 255, 255):
+                e = True
+                for g in colorPixel[d:d + x]:
+                    if g == (255, 255, 255):
+                        w = True
+                        break
+            if w:
+                w = False
+                e = False
+            elif e:
+                d /= y
+                w = e = False
+                break
+            d += x
+        d += 1
+        v += 1
+        j = 0
+        for i in colorPixel[int(d * x - x * 3):int(d * x - 2 * x)]:
+            if sum(i) < 750 and j > 5:
+                if sum(colorPixel[int(d * x - 3 * x) + j * 2]) < 750:
+                    j += 1
+                    break
+            j += 1
+        g = 0
+        k = []
+        w = False
+        e = True
+        r = False
+        m = n = 0
+        q = False
+        for i in range(1, x + 1):
+            for t in colorPixel[i * x - x:i * x]:
+                if sum(t) < 650 and (g < d - 8 or g > d + 8) and not w:
+                    w = True
+                    e = False
+                    q = True
+                    for z in range(g - 5, g + 5):
+                        if z in k or z - (z - 500) * 2 in k:
+                            r = True
+                    if not r and len(k) != 4 and (i < 495 or i > 507):
+                        k.append(g)
+                        k.append(-i + 501)
+                    r = False
+                if sum(t) < 650 and (g < d - 8 or g > d + 8) and w and not q:
+                    w = False
+                    e = True
+                    for z in range(g - 5, g + 5):
+                        if z in k or z - (z - 500) * 2 in k:
+                            r = True
+                    if not r and len(k) != 4 and (i < 495 or i > 507):
+                        k.append(g)
+                        k.append(-i + 501)
+                    r = False
+                g += 1
+                q = False
+            g = 0
+            if not e or len(k) == 4:
+                break
+
+        if not e or len(k) == 4:
+            for i in range(x + 1, 1, -1):
+                for t in colorPixel[i * x - x:i * x]:
+                    if sum(t) < 650 and (g < d - 8 or g > d + 8):
+                        for z in range(g - 5, g + 5):
+                            if z in k:
+                                r = True
+                        if not r and len(k) != 6 and (i < 495 or i > 507):
+                            k.append(g)
+                            k.append(-i + 501)
+                    r = False
+                    g += 1
+                g = 0
+
+        k[0] -= 498
+        k[2] -= 499
+        k[4] -= 499
+
+        for i in range(len(k)):
+            k[i] /= 50
+        x0 = k[0]
+        y0 = k[1]
+        x1 = k[2]
+        y1 = k[3]
+        x2 = k[4]
+        y2 = k[5]
+        q0 = (y0 - y1) * (x2 ** 2 - x0 ** 2)
+        q1 = q0 / (x0 ** 2 - x1 ** 2) * (x0 + x1)
+        q2 = y0 - y2
+        q3 = q2 * (x0 + x1) + q1
+        q4 = (x2 - x0) * (x0 + x1)
+        q5 = (x2 ** 2 - x0 ** 2) - q4
+        b = q3 / q5
+        a = (b * (x1 - x0) + y0 - y1) / (x0 ** 2 - x1 ** 2)
+        c = y0 - x0 ** 2 * a - x0 * b
+        gr(f'{a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
+        return f'y = {a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}'
+    except Exception as e:
+        return e
+
+def lfunc(u):  # функция определяющаяя линейную функцию по ее графику
+    try:
+        img = Image.open(u)
+        x, y = img.size
+
+        colorPixel = []
+        for i in range(img.size[0]):
+            for g in range(img.size[1]):
+                pixel = img.getpixel((g, i))
+                colorPixel.append(pixel)
+        v = 0
+        w = False
+        e = False
+        d = 0
+        for i in colorPixel[:img.size[0]]:
+            if i != (255, 255, 255):
+                e = True
+                for g in colorPixel[v:x * y:x]:
+                    if g == (255, 255, 255):
+                        w = True
+                        break
+            if w:
+                w = False
+                e = False
+            elif e:
+                w = e = False
+                break
+            v += 1
+
+        for i in colorPixel[0:x * y:x]:
+            if i != (255, 255, 255):
+                e = True
+                for g in colorPixel[d:d + x]:
+                    if g == (255, 255, 255):
+                        w = True
+                        break
+            if w:
+                w = False
+                e = False
+            elif e:
+                d /= y
+                w = e = False
+                break
+            d += x
+        d += 1
+        v += 1
+        j = 0
+        for i in colorPixel[int(d * x - x * 3):int(d * x - 2 * x)]:
+            if sum(i) < 750 and j > 5:
+                if sum(colorPixel[int(d * x - 3 * x) + j * 2]) < 750:
+                    j += 1
+                    break
+            j += 1
+        g = 0
+        k = []
+        w = False
+        e = True
+        r = False
+        m = n = 0
+        for i in range(1, x + 1):
+            for t in colorPixel[i * x - x:i * x]:
+                if sum(t) < 650 and (g < d - 8 or g > d + 8) and not w:
+                    for z in range(g - 5, g + 5):
+                        if z in k:
+                            r = True
+                    if i < 495 or i > 507:
+                        k.append(g)
+                        k.append(-i + 501)
+                        e = False
+                        break
+                    r = False
+                g += 1
+            if not e:
+                break
+        g = 0
         for i in range(x + 1, 1, -1):
             for t in colorPixel[i * x - x:i * x]:
                 if sum(t) < 650 and (g < d - 8 or g > d + 8):
                     for z in range(g - 5, g + 5):
                         if z in k:
                             r = True
-                    if not r and len(k) != 6 and (i < 495 or i > 507):
+                    if i < 495 or i > 507:
                         k.append(g)
                         k.append(-i + 501)
-                r = False
+                        w = True
+                        break
                 g += 1
-            g = 0
-
-    k[0] -= 498
-    k[2] -= 499
-    k[4] -= 499
-
-    for i in range(len(k)):
-        k[i] /= 50
-    x0 = k[0]
-    y0 = k[1]
-    x1 = k[2]
-    y1 = k[3]
-    x2 = k[4]
-    y2 = k[5]
-    q0 = (y0 - y1) * (x2 ** 2 - x0 ** 2)
-    q1 = q0 / (x0 ** 2 - x1 ** 2) * (x0 + x1)
-    q2 = y0 - y2
-    q3 = q2 * (x0 + x1) + q1
-    q4 = (x2 - x0) * (x0 + x1)
-    q5 = (x2 ** 2 - x0 ** 2) - q4
-    b = q3 / q5
-    a = (b * (x1 - x0) + y0 - y1) / (x0 ** 2 - x1 ** 2)
-    c = y0 - x0 ** 2 * a - x0 * b
-    gr(f'{a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
-    return f'y = {a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}'
-
-def lfunc(u):  # функция определяющаяя линейную функцию по ее графику
-    img = Image.open(u)
-    x, y = img.size
-
-    colorPixel = []
-    for i in range(img.size[0]):
-        for g in range(img.size[1]):
-            pixel = img.getpixel((g, i))
-            colorPixel.append(pixel)
-    v = 0
-    w = False
-    e = False
-    d = 0
-    for i in colorPixel[:img.size[0]]:
-        if i != (255, 255, 255):
-            e = True
-            for g in colorPixel[v:x * y:x]:
-                if g == (255, 255, 255):
-                    w = True
-                    break
-        if w:
-            w = False
-            e = False
-        elif e:
-            w = e = False
-            break
-        v += 1
-
-    for i in colorPixel[0:x * y:x]:
-        if i != (255, 255, 255):
-            e = True
-            for g in colorPixel[d:d + x]:
-                if g == (255, 255, 255):
-                    w = True
-                    break
-        if w:
-            w = False
-            e = False
-        elif e:
-            d /= y
-            w = e = False
-            break
-        d += x
-    d += 1
-    v += 1
-    j = 0
-    for i in colorPixel[int(d * x - x * 3):int(d * x - 2 * x)]:
-        if sum(i) < 750 and j > 5:
-            if sum(colorPixel[int(d * x - 3 * x) + j * 2]) < 750:
-                j += 1
+            if w:
                 break
-        j += 1
-    g = 0
-    k = []
-    w = False
-    e = True
-    r = False
-    m = n = 0
-    for i in range(1, x + 1):
-        for t in colorPixel[i * x - x:i * x]:
-            if sum(t) < 650 and (g < d - 8 or g > d + 8) and not w:
-                for z in range(g - 5, g + 5):
-                    if z in k:
-                        r = True
-                if i < 495 or i > 507:
-                    k.append(g)
-                    k.append(-i + 501)
-                    e = False
-                    break
-                r = False
-            g += 1
-        if not e:
-            break
-    g = 0
-    for i in range(x + 1, 1, -1):
-        for t in colorPixel[i * x - x:i * x]:
-            if sum(t) < 650 and (g < d - 8 or g > d + 8):
-                for z in range(g - 5, g + 5):
-                    if z in k:
-                        r = True
-                if i < 495 or i > 507:
-                    k.append(g)
-                    k.append(-i + 501)
-                    w = True
-                    break
-            g += 1
-        if w:
-            break
-    k[0] -= 498
-    k[2] -= 499
-    for i in range(len(k)):
-        k[i] /= 50
-    x0 = k[0]
-    y0 = k[1]
-    x1 = k[2]
-    y1 = k[3]
-    k = (y0 - y1) / (x0 - x1)
-    b = y0 - (k * x0)
-    gr(f'{k:.2} * x + {b:.2}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
-    return f'y = {k:.2} * x + {b:.2}'
+        k[0] -= 498
+        k[2] -= 499
+        for i in range(len(k)):
+            k[i] /= 50
+        x0 = k[0]
+        y0 = k[1]
+        x1 = k[2]
+        y1 = k[3]
+        k = (y0 - y1) / (x0 - x1)
+        b = y0 - (k * x0)
+        gr(f'{k:.2} * x + {b:.2}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
+        return f'y = {k:.2} * x + {b:.2}'
+    except Exception as e:
+        return e
 
 def polinom(b):  # функция построения графика по точкам
-    a = len(b)
-    c = []
-    d = []
-    f = 1
-    p = 0
-    for i in range(a):
-        for g in range(a):
-            if g != i:
-                e = poly1d([1, -b[g][0]])
-                s = b[i][0] - b[g][0]
-                c.append(e / s)
-        for g in c:
-            f = polymul(f, g)
-        d.append(f * b[i][1])
-        f = 1
+    try:
+        a = len(b)
         c = []
-    for i in d:
-        p += i
-    p = str(p).split('\n')
-    f = [i for i in p[1]]
-    for i in range(len(p[0])):
-        if p[0][i] != ' ':
-            f.insert(i, f' ** {p[0][i]}')
-    f = ''.join(f)
-    f = f.replace('x', '* x')
-    gr(f, p=b)
-    return f
+        d = []
+        f = 1
+        p = 0
+        for i in range(a):
+            for g in range(a):
+                if g != i:
+                    e = poly1d([1, -b[g][0]])
+                    s = b[i][0] - b[g][0]
+                    c.append(e / s)
+            for g in c:
+                f = polymul(f, g)
+            d.append(f * b[i][1])
+            f = 1
+            c = []
+        for i in d:
+            p += i
+        p = str(p).split('\n')
+        f = [i for i in p[1]]
+        for i in range(len(p[0])):
+            if p[0][i] != ' ':
+                f.insert(i, f' ** {p[0][i]}')
+        f = ''.join(f)
+        f = f.replace('x', '* x')
+        gr(f, p=b)
+        return f
+    except Exception as e:
+        return e
 
 
 class MyWidget(QMainWindow):  # основное окно
