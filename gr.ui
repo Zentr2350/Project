@@ -27,7 +27,7 @@
      <string notr="true">font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <property name="toolTip">
@@ -146,7 +146,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <x>60</x>
         <y>580</y>
         <width>371</width>
-        <height>16</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="text">
@@ -303,6 +303,24 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
         </widget>
        </item>
       </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab3">
+     <attribute name="title">
+      <string/>
+     </attribute>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>30</y>
+        <width>831</width>
+        <height>891</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab2">
@@ -590,24 +608,6 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab3">
-     <attribute name="title">
-      <string/>
-     </attribute>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>590</x>
-        <y>30</y>
-        <width>831</width>
-        <height>891</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Страница</string>
@@ -700,8 +700,8 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QLabel" name="label_34">
       <property name="geometry">
        <rect>
-        <x>480</x>
-        <y>390</y>
+        <x>30</x>
+        <y>290</y>
         <width>381</width>
         <height>31</height>
        </rect>
@@ -726,14 +726,17 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QLabel" name="label_35">
       <property name="geometry">
        <rect>
-        <x>480</x>
-        <y>450</y>
+        <x>30</x>
+        <y>320</y>
         <width>391</width>
         <height>461</height>
        </rect>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
      <widget class="QLabel" name="label_36">
@@ -753,7 +756,7 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>300</y>
+        <y>820</y>
         <width>181</width>
         <height>31</height>
        </rect>
@@ -766,8 +769,8 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>360</y>
-        <width>421</width>
+        <y>860</y>
+        <width>871</width>
         <height>41</height>
        </rect>
       </property>
@@ -822,6 +825,75 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
       <property name="text">
        <string>0</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="horizontalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>680</y>
+        <width>351</width>
+        <height>80</height>
+       </rect>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QComboBox" name="comboBox_4">
+         <item>
+          <property name="text">
+           <string>Увеличить</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Уменьшить</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_47">
+         <property name="text">
+          <string>в</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_48">
+         <property name="text">
+          <string>раз(-a)</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="label_49">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>610</y>
+        <width>371</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Здесь вы можете маштабировать картинку</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_9">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>780</y>
+        <width>171</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Маштабировать</string>
       </property>
      </widget>
     </widget>
