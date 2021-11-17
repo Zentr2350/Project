@@ -10,11 +10,9 @@ from PyQt5.QtCore import Qt
 from numpy import *
 
 
-s = []
 
 def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # функция строящая график по заданной функции
-
-    global s
+    s = []
 
     k = a
     con = sqlite3.connect("fp.sqlite")
@@ -31,7 +29,6 @@ def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # фун
         draw.line((i, 505, i, 495), fill=(0, 0, 0), width=3)
         draw.line((495, i, 505, i), fill=(0, 0, 0), width=3)
     cht = ''
-
     if o >= 1:
         for irt in range(int(-10000 // o), int(10000 // o)):
             a = a.replace('x', 'irt')
@@ -57,6 +54,7 @@ def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # фун
 
 
             except Exception as e:
+                print(e)
                 pass
         if o == 1:
             if cur.execute(f"select function from fpqt where function = '{k}'").fetchall() == []:
@@ -102,6 +100,13 @@ def gr(a, o=1, w=(0, 0, 0), name='gr.jpg', new=False, name2='', p=()):  # фун
             except Exception as e:
                 print(e)
                 pass
+        a = a.replace('cht', 'i[0]')
+        for i in p:
+            draw.line(
+                (i[0] * 50 * o + 500 + 2, (0 - eval(a)) * o * 50 + 500, i[0] * o * 50 + 500 - 2,
+                 (0 - eval(a)) * o * 50 + 500),
+                fill=(255, 0, 0),
+                width=6)
 
         im.save(name)
 
@@ -232,7 +237,8 @@ def func(u):  # функция определяющая квадратичную
         gr(f'{a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
         return f'y = {a:.2f} * x ** 2 + {b:.2f} * x + {c:.2f}'
     except Exception as e:
-        return e
+        print(e)
+        pass
 
 def lfunc(u):  # функция определяющаяя линейную функцию по ее графику
     try:
@@ -336,7 +342,8 @@ def lfunc(u):  # функция определяющаяя линейную фу
         gr(f'{k:.2} * x + {b:.2}', 1, (255, 0, 0), name='gr1.jpg', new=True, name2=u)
         return f'y = {k:.2} * x + {b:.2}'
     except Exception as e:
-        return e
+        print(e)
+        pass
 
 def polinom(b):  # функция построения графика по точкам
     try:
@@ -358,17 +365,21 @@ def polinom(b):  # функция построения графика по то�
             c = []
         for i in d:
             p += i
+
         p = str(p).split('\n')
+        h = 0
         f = [i for i in p[1]]
         for i in range(len(p[0])):
             if p[0][i] != ' ':
-                f.insert(i, f' ** {p[0][i]}')
+                f.insert(i + h, f' ** {p[0][i]}')
+                h += 1
         f = ''.join(f)
         f = f.replace('x', '* x')
         gr(f, p=b)
         return f
     except Exception as e:
-        return e
+        print(e)
+        pass
 
 
 class MyWidget(QMainWindow):  # основное окно
@@ -376,9 +387,9 @@ class MyWidget(QMainWindow):  # основное окно
         super().__init__()
         uic.loadUi('gr.ui', self)  # Загружаем дизайн
 
-        self.tabWidget.setTabText(2, 'ШАБЛОН')
+        self.tabWidget.setTabText(1, 'ШАБЛОН')
         self.tabWidget.setTabText(0, 'Построение графика по функции')
-        self.tabWidget.setTabText(1, 'Нахождение функции по графику')
+        self.tabWidget.setTabText(2, 'Нахождение функции по графику')
         self.tabWidget.setTabText(3, 'Построение графика по точкам')
         self.pushButton.clicked.connect(self.gra)
         self.pixmap = QPixmap('shablon.jpg')
@@ -420,6 +431,13 @@ class MyWidget(QMainWindow):  # основное окно
         self.label_42.hide()
         self.label_43.hide()
         self.label_44.hide()
+        self.pushButton_9.clicked.connect(self.xx)
+        self.label_47.hide()
+        self.label_48.hide()
+        self.lineEdit_5.hide()
+        self.comboBox_4.hide()
+        self.pushButton_9.hide()
+        self.label_49.hide()
 
     def y(self):
         self.ff = DataBase()
@@ -437,6 +455,19 @@ class MyWidget(QMainWindow):  # основное окно
 
         self.pixmap = QPixmap('gr.jpg')
         self.image = self.label
+        self.image.setPixmap(self.pixmap)
+
+    def xx(self):
+        if self.comboBox_4.currentText() == 'Увеличить':
+            self.k *= int(self.lineEdit_5.text())
+        else:
+            self.k /= int(self.lineEdit_5.text())
+        gr(self.w, o=self.k, p=self.points)
+        self.label_42.setText(str(1 / self.k))
+        self.label_43.setText(str(1 / self.k))
+
+        self.pixmap = QPixmap('gr.jpg')
+        self.image = self.label_36
         self.image.setPixmap(self.pixmap)
 
     def gra(self):
@@ -511,8 +542,9 @@ class MyWidget(QMainWindow):  # основное окно
                 pass
 
     def polinomm(self):
-        a = polinom(self.points)
-        self.label_38.setText(a)
+        self.k = 1
+        self.w = polinom(self.points)
+        self.label_38.setText(self.w)
         self.pixmap = QPixmap('gr.jpg')
         self.image = self.label_36
         self.image.setPixmap(self.pixmap)
@@ -521,6 +553,12 @@ class MyWidget(QMainWindow):  # основное окно
         self.label_44.show()
         self.label_37.show()
         self.label_38.show()
+        self.label_47.show()
+        self.label_48.show()
+        self.lineEdit_5.show()
+        self.comboBox_4.show()
+        self.label_49.show()
+        self.pushButton_9.show()
 
 
 
