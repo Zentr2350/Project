@@ -3,6 +3,7 @@ from math import *
 from PIL import Image, ImageDraw
 
 from PyQt5 import uic  # Импортируем uic
+from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QFileDialog
 from PyQt5.QtGui import QPixmap
 import sqlite3
@@ -559,6 +560,8 @@ class MyWidget(QMainWindow):  # основное окно
         self.comboBox_4.show()
         self.label_49.show()
         self.pushButton_9.show()
+        self.label_42.setText(str(1 / self.k))
+        self.label_43.setText(str(1 / self.k))
 
 
 
