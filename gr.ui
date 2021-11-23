@@ -150,7 +150,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
        </rect>
       </property>
       <property name="text">
-       <string>Здесь вы можете маштабировать картинку</string>
+       <string>Здесь вы можете масштабировать картинку</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_2">
@@ -303,6 +303,23 @@ font: 11pt &quot;MS Shell Dlg 2&quot;;</string>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="label_45">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>770</y>
+        <width>601</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>© Д. А. Самохвалов, 2021
+© Самохвалов Д. А., 2021
+© ООО «Правообладатель контента», 2021
+© Самохвалов Д. А., перевод на русский язык, 2021
+© 2021 Правообладатель контента</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab3">
